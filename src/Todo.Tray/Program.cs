@@ -1,3 +1,6 @@
+using System;
+using System.Windows.Forms;
+
 namespace Todo.Tray;
 
 static class Program
@@ -19,7 +22,7 @@ static class Program
 
         try
         {
-            ApplicationConfiguration.Initialize();
+            // ApplicationConfiguration.Initialize();
             ApplicationContext appContext = new CustomApplicationContext();
             Application.Run(appContext);
         }

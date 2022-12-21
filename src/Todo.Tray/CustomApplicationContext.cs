@@ -1,4 +1,8 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
+using System.Drawing;
+using System.IO;
+using System.Windows.Forms;
 
 namespace Todo.Tray;
 
@@ -6,13 +10,13 @@ public class CustomApplicationContext : ApplicationContext
 { 
     NotifyIcon _notifyIcon;
     IContainer _components;
+    TodoManager _todoManager = new TodoManager();
 
     public CustomApplicationContext()
     {
         InitialiseContext();
         
         // work setup goes here
-        
     }
     
     void InitialiseContext()
@@ -35,11 +39,15 @@ public class CustomApplicationContext : ApplicationContext
         e.Cancel = false;
         
         // work goes here 
+        TodoForm todoForm = new TodoForm(_todoManager);
+        todoForm.Show();
     }
 
     void notifyIcon_DoubleClick(object sender, EventArgs e)
     {
         // TODO: work 
+        TodoForm todoForm = new TodoForm(_todoManager);
+        todoForm.Show();
     }
 
     void exitItem_Click(object sender, EventArgs e)
