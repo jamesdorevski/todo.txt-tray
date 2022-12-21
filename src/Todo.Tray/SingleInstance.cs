@@ -5,15 +5,13 @@ namespace Todo.Tray;
 
 public static class SingleInstance
 {
-    static string APPLICATION_GUID = Assembly.GetExecutingAssembly().GetCustomAttribute<GuidAttribute>().Value.ToUpper();
     static Mutex _mutex;
-
-    public static readonly int WM_SHOWFIRSTINSTANCE = WinApi.RegisterWindowMessage("WM_SHOWFIRSTINSTANCE|{0}", APPLICATION_GUID);
+    public static readonly int WM_SHOWFIRSTINSTANCE = WinApi.RegisterWindowMessage("WM_SHOWFIRSTINSTANCE|{0}", ProgramInfo.AssemblyGuid);
     
     public static bool Start()
     {
         bool onlyInstance = false;
-        string mutexName = String.Format("Local\\{0}", APPLICATION_GUID);
+        string mutexName = String.Format("Local\\{0}", ProgramInfo.AssemblyGuid);
 
         _mutex = new Mutex(true, mutexName, out onlyInstance);
         return onlyInstance;
