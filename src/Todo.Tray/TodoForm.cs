@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace Todo.Tray;
@@ -17,6 +18,12 @@ internal class TodoForm : Form
     private void RenderTodoItems()
     {
         todoItemTextBox.Text = String.Join(Environment.NewLine, _todoManager.GetTodoItems());
+    }
+
+// TODO: fix focus
+    public void SetFocus()
+    {
+        inputTextBox.Focus();
     }
 
     private void addButton_Click(object sender, EventArgs e)
@@ -65,10 +72,14 @@ internal class TodoForm : Form
         // TodoForm
         // 
         this.ClientSize = new System.Drawing.Size(284, 261);
+        this.ControlBox = false;
         this.Controls.Add(this.todoItemTextBox);
         this.Controls.Add(this.inputTextBox);
         this.Controls.Add(this.addButton);
         this.Name = "TodoForm";
+        this.Deactivate += new System.EventHandler(this.TodoForm_Leave);
+        this.Shown += new System.EventHandler(this.TodoForm_Shown);
+        this.Leave += new System.EventHandler(this.TodoForm_Leave);
         this.ResumeLayout(false);
         this.PerformLayout();
     }
@@ -77,4 +88,15 @@ internal class TodoForm : Form
     private System.Windows.Forms.TextBox todoItemTextBox;
 
     private System.Windows.Forms.Button addButton;
+
+    private void TodoForm_Leave(object sender, EventArgs e)
+    {
+        this.Close();
+    }
+
+    private void TodoForm_Shown(object sender, EventArgs e)
+    {
+        Rectangle workingArea = Screen.GetWorkingArea(this);
+        this.Location = new Point(workingArea.Right - Size.Width, workingArea.Bottom - Size.Height);
+    }
 }

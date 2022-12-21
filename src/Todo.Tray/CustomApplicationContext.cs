@@ -41,6 +41,7 @@ public class CustomApplicationContext : ApplicationContext
         // work goes here 
         TodoForm todoForm = new TodoForm(_todoManager);
         todoForm.Show();
+        todoForm.SetFocus();
     }
 
     void notifyIcon_DoubleClick(object sender, EventArgs e)
@@ -48,6 +49,7 @@ public class CustomApplicationContext : ApplicationContext
         // TODO: work 
         TodoForm todoForm = new TodoForm(_todoManager);
         todoForm.Show();
+        todoForm.SetFocus();
     }
 
     void exitItem_Click(object sender, EventArgs e)
